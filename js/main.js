@@ -87,7 +87,7 @@ function convertCurrency() {
 
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker
-        .register('/js/sw.js', { scope: '/js/' })
+        .register('/sw.js', { scope: '/' })
         .then(registration => {
             console.log("Service worker Registered");
         })
