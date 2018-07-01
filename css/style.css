@@ -1,0 +1,74 @@
+#title {
+    margin-top: 20px;
+}
+
+.well>h3 {
+    text-align: center;
+}
+
+.container-fluid {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.row#eins {
+    margin: 65px auto;
+}
+
+.row#zwei {
+    margin: 65px auto;
+}
+
+h4 {
+    margin-left: 239px;
+    color: #eeeeee;
+}
+
+.ht {
+    height: auto;
+    text-align: center;
+}
+
+.ms {
+    height: 100px;
+    border: 1px solid white;
+}
+
+#fro>p {
+    margin-top: 35px;
+}
+
+input[type="number"] {
+    height: 80px;
+    margin-top: 7px;
+    border: none;
+    font-size: 18px;
+    text-align: center;
+}
+
+#text {
+    height: 80px;
+    margin-top: 8px;
+    border: none;
+    text-align: center;
+    font-size: 18px;
+}
+
+#to,
+#to2,
+#too {
+    background: white;
+}
+
+#convert {
+    text-align: center;
+}
+
+#to,
+#from {
+    margin-top: 20px;
+    height: 60px;
+    /* margin-left: -190px; */
+    margin-left: 5px;
+}
+
+#from {}
