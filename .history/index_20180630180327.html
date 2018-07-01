@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Currency Converter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+</head>
+
+<body>
+    <div class="container-fluid">
+        <!--main starts-->
+        <div class="row" id="title">
+            <div class="well well-sm well-lg">
+                <h3>Currency Converter</h3>
+            </div>
+        </div>
+        <div class="row" id="main">
+            <!--row one-->
+            <div class="row" id="eins">
+                <h4>From</h4>
+                <div class="col-sm-1"></div>
+                <div class="col-sm-6 ht ms" id="fro1">
+                    <select class="form-control" id="from">
+                        <option value="...">...</option>
+                    </select>
+                </div>
+                <div class="col-sm-4 ht ms" id="to2">
+                    <!-- <input type="number" id="number1" onkeyup=convertCurrency()   name="value1"> -->
+                    <input type="number" id="number1" onkeyup=convertCurrency() name="value1" onfocus="this.value=''">
+                </div>
+                <div class="col-sm-1 ht"></div>
+            </div>
+            <!--row one ends-->
+
+            <!--row two-->
+            <div class="row" id="zwei">
+                <h4>To</h4>
+                <div class="col-sm-1"></div>
+                <div class="col-sm-6 ht ms" id="fro2">
+                    <select class="form-control" id="to">
+                        <option value="...">...</option>
+                    </select>
+                </div>
+                <div class="col-sm-4 ht ms" id="too">
+                    <input type="text" id="text" name="value2" onfocus="this.value=''">
+                </div>
+                <div class="col-sm-1 ht"></div>
+            </div>
+            <!--row two ends-->
+
+        </div><br>
+        <!--main ends-->
+        <div id="convert">
+            <button type="button" class="btn btn-lg" onclick="convertCurrency()">Convert</button>
+        </div><br><br>
+    </div><br><br>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./js/idb.js"></script>
+    <script src="./js/sw.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
