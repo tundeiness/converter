@@ -28,9 +28,16 @@ $(document).ready(function() {
             for (const result in results) {
                 for (const sm in results[result]) {
 
-                    optFrom.innerHTML += `<option value='${results[result][sm]["currencyId"]}'>${results[result][sm]["currencyName"]} ( ${results[result][sm]["currencySymbol"]} )</option>`;
-                    optTo.innerHTML += `<option value='${results[result][sm]["currencyId"]}' >${results[result][sm]["currencyName"]} ( ${results[result][sm]["currencySymbol"]} )</option>`;
-                    saveCountries(results[result][sm]);
+                    const currencyId = results[result][sm]["currencyId"];
+                    const currencyName = results[result][sm]["currencyName"];
+                    const currencySymbol = results[result][sm]["currencySymbol"];
+                    console.log(currencyId + " " + currencySymbol);
+                    optFrom.innerHTML += `<option value='${currencyId}'>${currencyName} ( ${currencySymbol} )</option>`;
+                    optTo.innerHTML += `<option value='${currencyId}'>${currencyName} ( ${currencySymbol} )</option>`;
+
+                    // optFrom.innerHTML += `<option value='${results[result][sm]["currencyId"]}'>${results[result][sm]["currencyName"]} ( ${results[result][sm]["currencySymbol"]} )</option>`;
+                    // optTo.innerHTML += `<option value='${results[result][sm]["currencyId"]}' >${results[result][sm]["currencyName"]} ( ${results[result][sm]["currencySymbol"]} )</option>`;
+                    // saveCountries(results[result][sm]["currencyId"]);
 
                 }
             }
@@ -38,8 +45,6 @@ $(document).ready(function() {
         .catch(err => console.log(JSON.stringify(err)));
 });
 
-//saveCountries(results[result][sm])
-//results[result][sm]
 
 
 
@@ -66,14 +71,14 @@ function convertCurrency() {
 
             return response.json();
         }).then(rates => {
-
+            //saveRates(rates);
             const compact = Math.round(Object.values(rates) * 100) / 100;
             const con = Math.round((froGeld * compact) * 100) / 100;
             // const inverse = Math.round((toGeld / compact) * 100) / 100;
 
             toGeld.value = con;
             // froGeld.value = inverse;
-            saveRates(rates);
+
 
         })
         .catch(err => console.log(JSON.stringify(err)));
@@ -105,33 +110,105 @@ if ('serviceWorker' in navigator) {
 
 if (!('indexedDB' in window)) {
     console.log('browser is not supported');
-    //return;
 }
 
 
 /* Open database */
 
 
-function openDb() {
+/* function openDb() {
 
     const dbName = 'BDC';
     const dbPromise = indexedDB.open(dbName, 1, upgradeDb => {
 
         if (upgradeDb.oldVersion) {
-            console.log(`you are still using version ${upgradeDb.oldVersion}. An update is required`);
-        } else {
-            console.log("now creating an object store for the currencies and the rates");
             let countryStore = upgradeDb.creatObjectStore('countries', { keyPath: 'countryId' });
-
         }
 
     });
     return dbPromise;
-}
+} */
+
+const apiURL = `https://free.currencyconverterapi.com/api/v5/countries`;
+
+let countriesCurrencies;
+
+let dbbase = "bureauDC"
+
+const dbPromise = idb.open('dbbase', 0, upgradeDB => {
+
+    if (upgradeDB.oldVersion) {
+        upgradeDB.createObjectStore('objectOne', { keyPath: 'id' });
+    }
+});
+
+
+fetch(apiURL)
+    .then(response => {
+        return response.json();
+    })
+    .then(data => {
+
+        dbPromise.then(db => {
+            if (!db) return;
+
+            countriesCurrencies = [data.results];
+
+            const tx = db.transaction('objectOne', 'readwrite');
+
+            const store = tx.objectStore('objectOne');
+
+            countriesCurrencies.forEach(currency => {
+                for (let value in currency) {
+                    store.put(currency.currencyId);
+                }
+            });
+            return tx.complete;
+        });
+    });
 
 
 
-function openDbRates() {
+//Store Rates
+
+const ratesURL = `https://free.currencyconverterapi.com/api/v5/convert?q=${from}_${to}&compact=ultra`;
+
+let countriesRates;
+
+let dbases = "bureauRates"
+
+const dbProm = idb.open('dbbases', 0, upgradeDB => {
+
+    if (upgradeDB.oldVersion) {
+        upgradeDB.createObjectStore('objectTwo', { keyPath: 'id' });
+    }
+});
+
+
+
+fetch(ratesURL)
+    .then(response => {
+        return response.json();
+    })
+    .then(rateData => {
+
+        dbProm.then(db => {
+            if (!db) return;
+
+
+
+            const txn = db.transaction('objectTwo', 'readwrite');
+
+            const stores = txn.objectStore('objectTwo');
+            stores.put(rateData);
+
+        });
+        return tx.complete;
+    });
+
+
+
+/* function openDbRates() {
 
     const dbName = 'Rates';
     const dbPromise = indexedDB.open(dbName, 1, upgradeDb => {
@@ -143,26 +220,27 @@ function openDbRates() {
 
     });
     return dbPromise;
-}
+} */
 
 
 
-function saveRates(data, query) {
+/* function saveRates(data, query) {
 
     openDbRates()
         .then(event => {
             const store = event.transaction("rates", "readwrite").objectStore("rates");
+
             storage.put({ data: data, query: query })
         });
 
 }
-
+ */
 
 
 
 /* save currencyID */
 
-function saveCountries(chunk) {
+/* function saveCountries(chunk) {
 
     openDb()
         .then(event => {
@@ -173,3 +251,4 @@ function saveCountries(chunk) {
         });
 
 }
+ */
