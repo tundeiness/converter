@@ -27,19 +27,32 @@ $(document).ready(function() {
         .then(results => {
             for (const result in results) {
                 for (const sm in results[result]) {
-
-                    optFrom.innerHTML += `<option value='${results[result][sm]["currencyId"]}'>${results[result][sm]["currencyName"]} ( ${results[result][sm]["currencySymbol"]} )</option>`;
-                    optTo.innerHTML += `<option value='${results[result][sm]["currencyId"]}' >${results[result][sm]["currencyName"]} ( ${results[result][sm]["currencySymbol"]} )</option>`;
+                    
+                    
+                    const currencyId = results[result][sm]["currencyId"];
+                    
+                    const currencyName = results[result][sm]["currencyName"];
+                    
+                    
+                    const currencySymbol = results[result][sm]["currencySymbol"];
+                    
+                    
+                    optFrom.innerHTML += `<option value='${currencyId}'>${currencyName} ( ${currencySymbol} )</option>`;
+                    optTo.innerHTML += `<option value='${currencyId}'>${currencyName} ( ${currencySymbol} )</option>`;
+                    
+                    
+                    
+                   // optFrom.innerHTML += `<option value='${results[result][sm]["currencyId"]}'>${results[result][sm]["currencyName"]} ( ${results[result][sm]["currencySymbol"]} )</option>`;
+                   // optTo.innerHTML += `<option value='${results[result][sm]["currencyId"]}' >${results[result][sm]["currencyName"]} ( ${results[result][sm]["currencySymbol"]} )</option>`;
+                    
                     saveCountries(results[result][sm]);
 
                 }
             }
         })
-        .catch(err => console.log(JSON.stringify(err)));
+        .catch(err => console.log(JSON.stringify(err));
+               
 });
-
-//saveCountries(results[result][sm])
-//results[result][sm]
 
 
 
