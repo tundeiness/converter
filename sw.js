@@ -2,10 +2,10 @@ let cacheWorks = "v1";
 
 const cacheFiles = [
     '/',
-    '/css/style.css',
-    '/js/idb.js',
-    '/js/main.js',
-    '/index.html',
+    './css/style.css',
+    './js/idb.js',
+    './js/main.js',
+    './index.html',
     'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js',
     'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js',
     'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',

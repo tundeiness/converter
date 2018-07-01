@@ -87,7 +87,7 @@ function convertCurrency() {
 
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker
-        .register('/sw.js', { scope: '/' })
+        .register('./sw.js', { scope: '/' })
         .then(registration => {
             console.log("Service worker Registered");
         })
@@ -137,8 +137,6 @@ function openDbRates() {
     const dbPromise = indexedDB.open(dbName, 1, upgradeDb => {
 
         if (upgradeDb.oldVersion) {
-            console.log(`you are still using version ${upgradeDb.oldVersion}. An update is required`);
-        } else {
             console.log("now creating an object store for the currencies and the rates");
             let rateStore = upgradeDb.creatObjectStore('rates', { keyPath: 'query' });
         }
