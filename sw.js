@@ -51,36 +51,43 @@ self.addEventListener('activate', event => {
 
 
 self.addEventListener('fetch', event => {
-    console.log("[serviceWorker] Fetching", event.request.url);
+    console.log("Fetching", event.request.url);
+    const url = 'https://free.currencyconverterapi.com/api/v5/countries';
 
-    event.respondWith(
+    if (event.request.url === url) {
 
-        caches.match(event.request)
-        .then(response => {
-            if (response) {
-                console.log(" Serviceworker is Alive!!!...in ere", event.request.url);
-                return response;
-            }
-            let requestClone = event.request.clone();
+        event.respondWith(
 
-            fetch(requestClone)
-                .then(response => {
-                    if (!response) {
-                        console.log(" Serviceworker is not responding...in ere");
-                        return response;
-                    }
+            caches.match(event.request)
+            .then(response => {
+                if (response) {
+                    console.log(" Serviceworker is Alive!!!...in ere", event.request.url);
+                    return response;
+                }
+                let requestClone = event.request.clone();
 
-                    let responseClone = response.clone();
-
-                    caches.open(cacheWorks)
-                        .then(cache => {
-                            cache.put(event.request, responseClone);
+                fetch(requestClone)
+                    .then(response => {
+                        if (!response) {
+                            console.log(" Serviceworker is not responding...in ere");
                             return response;
-                        });
-                })
-                .catch(err => {
-                    console.log("ServiceWorker: Error fetching and caching new files", err);
-                });
-        })
-    )
-})
+                        }
+
+                        let responseClone = response.clone();
+
+                        caches.open(cacheWorks)
+                            .then(cache => {
+                                cache.put(event.request, responseClone);
+                                return response;
+                            });
+                    })
+                    .catch(err => {
+                        console.log("ServiceWorker: Error fetching and caching new files", err);
+                    });
+            })
+        )
+
+
+    }
+
+});
