@@ -171,34 +171,7 @@ function saveCountries(chunk) {
             const storage = event.transaction("countries", "readwrite").objectStore("countries");
             Object.values(chunk).forEach(oneChunk => {
                 storage.put(oneChunk);
-            })
+            });
         });
 
 }
-
-
-/* save currencyID */
-
-
-/* function saveCountries(chunk) {
-
-    const oDb = openDb();
-
-    oDb.onsuccess = event => {
-        console.log('database opened');
-        const search = event.target.result;
-
-        const countryCurrency = search.transaction("countries").objectStore("countries").get(chunk[currencyId]);
-
-        countryCurrency.onsuccess = event => {
-            const baseData = event.target.result;
-            const storage = search.transaction("countries", "readwrite").objectStore("countries");
-
-            if (!baseData) storage.add(chunk, chunk[currencyId]);
-            return;
-
-            store.put(chunk, chunk[currencyId]);
-        };
-    }
-
-} */
