@@ -174,15 +174,16 @@ if ('serviceWorker' in navigator) {
             });
     });
 }
-
+return;
 
 
 // check for browser compatibility
 
 if (!window.idb) {
     console.log('browser is not supported');
+    return;
 }
-
+//return;
 
 
 /* Open database for the country currency symbol*/
@@ -239,4 +240,4 @@ function country() {
         })
 }
 
-country();
+return country();

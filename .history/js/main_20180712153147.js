@@ -118,125 +118,14 @@ function convertCurrency() {
         });
     }
 
-    function rateStorage() {
-
-        return fetch(convUrl)
-            .then(response => {
-                return response.json();
-            })
-            .then(rata => {
-
-                // console.log(`${Object.entries(rata)}`);
-
-                createDB().then(db => {
-                        // if (!db) return;
-                        let txnx = db.transaction("bureauRates", 'readwrite');
-                        let rateStore = txnx.objectStore("bureauRates");
-
-                        //console.log(`${rata}`);
-
-                        //   `${from}_${to}`
-
-                        rateStore.put({
-                            'bureauRates': `${Object.entries(rata)}`
-                        });
-                        return txnx.complete;
-                    })
-                    .then(() => {
-                        console.log("rates successfully added and stored");
-                    })
-                    .catch(err => console.log(JSON.stringify(err)));
-
-            });
 
 
-    }
 
-    return rateStorage();
+
+
+
+
+
 
 
 }
-
-
-// Register service worker and delay registration
-
-if ('serviceWorker' in navigator) {
-
-    window.addEventListener('load', function() {
-        navigator.serviceWorker
-            .register('./sw.js', { scope: '/' })
-            .then(registration => {
-                console.log("Service worker Registered");
-                console.log(registration.scope);
-            })
-            .catch(err => {
-                console.log("Service worker Failed to Register", err);
-            });
-    });
-}
-
-
-
-// check for browser compatibility
-
-if (!window.idb) {
-    console.log('browser is not supported');
-}
-
-
-
-/* Open database for the country currency symbol*/
-
-
-const name = 'currencyNam';
-
-let dataBee = idb.open(name, 1, responseDB => {
-
-    //consider a case where version may be old
-    //before creating the objectStore
-
-    switch (responseDB.oldVersion) {
-        case 0:
-        case 1:
-            //create an objectStore
-            responseDB.createObjectStore('currencyNam', { keyPath: 'currId' });
-
-    }
-
-});
-
-
-//fetch the records
-
-function country() {
-    return fetch(url)
-        .then(response => {
-            return response.json();
-        })
-        .then(data => {
-            dataBee.then(db => {
-                    if (!db) return;
-
-                    let txn = db.transaction('currencyNam', 'readwrite');
-                    let countryStore = txn.objectStore('currencyNam');
-
-                    for (let currency in data) {
-                        for (let res in data[currency]) {
-                            countryStore.put({
-                                'currencyNam': `${data[currency][res]["currencyName"]}`,
-                                'currId': `${data[currency][res]["currencyId"]}`
-                            });
-                        }
-                    }
-                    return txn.complete;
-                })
-                .then(() => {
-                    console.log("countries successfully added");
-                })
-                .catch(err => {
-                    console.log("Error adding country data", err);
-                })
-        })
-}
-
-country();

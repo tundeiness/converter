@@ -33,7 +33,7 @@ self.addEventListener('install', event => {
 self.addEventListener('fetch', (event) => {
     console.log("[ServiceWorker] Fetching", event.request.url);
 
-    event.respondWith(
+    e.respondWith(
         caches.match(event.request).then((response) => {
             if (response) return response;
             return fetch(event.request);

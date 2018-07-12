@@ -1,7 +1,7 @@
 let cacheWorks = "v1";
 
 const cacheFiles = [
-    './',
+    '/',
     './css/style.css',
     './js/idb.js',
     './js/main.js',
@@ -30,29 +30,28 @@ self.addEventListener('install', event => {
 
 
 // simple version
-self.addEventListener('fetch', (event) => {
-    console.log("[ServiceWorker] Fetching", event.request.url);
+/* self.addEventListener('fetch', (e) => {
+    console.log("[ServiceWorker] Fetching", e.request.url);
 
-    event.respondWith(
-        caches.match(event.request).then((response) => {
-            if (response) return response;
-            return fetch(event.request);
+    e.respondWith(
+        caches.match(e.request).then((response) => {
+            if(response) return response;
+            return fetch(e.request);
         })
-    );
-});
+    ); */
 
 
 
 
 
-/* self.addEventListener('fetch', event => {
+self.addEventListener('fetch', event => {
     console.log("fetching", event.request.url);
     // const url = 'https://free.currencyconverterapi.com/api/v5/countries';
 
     let requestUrl = new URL(event.request.url);
 
     if (requestUrl.origin === location.origin) {
-        if (requestUrl.pathname === './') {
+        if (requestUrl.pathname === '/') {
             event.respondWith(caches.match('/index.html'));
             return;
         }
@@ -89,7 +88,7 @@ self.addEventListener('fetch', (event) => {
         );
 
     }
-}); */
+});
 
 
 

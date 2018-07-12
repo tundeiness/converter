@@ -174,15 +174,16 @@ if ('serviceWorker' in navigator) {
             });
     });
 }
-
+return;
 
 
 // check for browser compatibility
 
 if (!window.idb) {
     console.log('browser is not supported');
+    return;
 }
-
+//return;
 
 
 /* Open database for the country currency symbol*/
@@ -204,39 +205,3 @@ let dataBee = idb.open(name, 1, responseDB => {
     }
 
 });
-
-
-//fetch the records
-
-function country() {
-    return fetch(url)
-        .then(response => {
-            return response.json();
-        })
-        .then(data => {
-            dataBee.then(db => {
-                    if (!db) return;
-
-                    let txn = db.transaction('currencyNam', 'readwrite');
-                    let countryStore = txn.objectStore('currencyNam');
-
-                    for (let currency in data) {
-                        for (let res in data[currency]) {
-                            countryStore.put({
-                                'currencyNam': `${data[currency][res]["currencyName"]}`,
-                                'currId': `${data[currency][res]["currencyId"]}`
-                            });
-                        }
-                    }
-                    return txn.complete;
-                })
-                .then(() => {
-                    console.log("countries successfully added");
-                })
-                .catch(err => {
-                    console.log("Error adding country data", err);
-                })
-        })
-}
-
-country();

@@ -181,8 +181,9 @@ if ('serviceWorker' in navigator) {
 
 if (!window.idb) {
     console.log('browser is not supported');
-}
 
+}
+return;
 
 
 /* Open database for the country currency symbol*/
@@ -239,4 +240,4 @@ function country() {
         })
 }
 
-country();
+return country();

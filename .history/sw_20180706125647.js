@@ -1,4 +1,4 @@
-let cacheWorks = "v1";
+let cacheWorks = "v2";
 
 const cacheFiles = [
     './',
