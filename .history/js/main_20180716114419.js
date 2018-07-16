@@ -41,7 +41,14 @@ $(document).ready(function() {
         })
         .catch(
             err => console.log(JSON.stringify(err))
+            /* {
+                if (optFrom.options.namedItems(`${currencyId}`).text === " ") {
+                    alert("please select a currency to make the conversion");
+                }
 
+                return;
+
+            } */
         );
 });
 
@@ -62,14 +69,15 @@ function convertCurrency() {
     function conversion() {
         fetch(convUrl).then(response => {
                 if (response.status !== 200) {
-
+                    //run offline function here
                     console.log("The task cannot be done offline");
-
+                    // return offline();
+                    // console.log("The task cannot be done offline");
+                    // return;
                 }
                 return response.json();
             }).then(rates => {
-
-
+                // console.log(rates);
                 const compact = Math.round(Object.values(rates) * 100) / 100;
                 const con = Math.round((froGeld * compact) * 100) / 100;
 
@@ -80,6 +88,19 @@ function convertCurrency() {
                 () => {
                     return offline();
                 }
+                /* () => {
+                    // catch an error if inputs field for conversion is empty 
+                    // or if entries are not numbers. 
+
+                    if (froGeld === '' && isNaN(froGeld)) {
+                        // show an alert message if amount field is empty
+                        alert("input amount cannot be empty and cannot be alphabets");
+                        // froGeld.setAttribute('placeholder', 'amount not given');
+                        froGeld.style.backgroundColor = 'red';
+                        // return;
+                    }
+                    return;
+                } */
             );
     }
 
